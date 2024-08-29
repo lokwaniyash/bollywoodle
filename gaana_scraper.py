@@ -21,8 +21,12 @@ for i in url:
     url_1= "https://gaana.com" + i.find("a")["href"]
     url_list.append(url_1)
     name=i.find("a").text
+    artists = i.findAll("a",class_="_link")
+    artistsList = []
+    for j in artists:
+        artistsList.append(j.text)
     num+=1
-    print("     " ,num,name)
+    print("     " ,num,name,"by:", ", ".join(artistsList))
 # print(url_list)
 user = int(input("Enter a number for Gaana and bajana "))
 song = url_list[user-1]
