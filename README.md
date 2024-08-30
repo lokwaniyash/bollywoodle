@@ -1,18 +1,3 @@
-# Top-50-Bollywood-Songs-Scraper
+# Bollywoodle
 
-Here I scraped top-50 Bollywood songs from gaana.com(https://gaana.com/) when you will run the program then it will be automate open the browser and autoplay the songs.
-
-## Requirements
-
-### BeautifulSoup
-
-Beautiful Soup is a **Python library** for pulling data out of **HTML** and **XML** files. It works with your favorite parser to provide idiomatic ways of navigating, searching, and modifying the parse tree. It commonly saves programmers hours or days of work.
-
-```
-sudo apt-get update
-sudo apt-get install python3-pip
-pip3 install beautifulsoup4
-pip3 install requests
-
-```
-After finishing the installation process above, you can run the task, using `python3 gaana_scraper.py`.
+A website where you can a clip of indian songs plays for you, increasing in time 6 times, the faster you guess the more points you get
