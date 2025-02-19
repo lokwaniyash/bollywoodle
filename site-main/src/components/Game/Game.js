@@ -8,7 +8,7 @@ import { useTheme } from '@mui/material/styles';
 import ActualGame from '../ActualGame/ActualGame';
 
 export default function Game() {
-  const [value, setValue] = React.useState(1);
+  const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -44,14 +44,25 @@ export default function Game() {
 
   return (
     <Box sx={{ width: '100%', height: '100%', bgcolor: 'background.paper' }}>
-      <Tabs value={value} onChange={handleChange} centered>
-        <Tab label="Day #" disabled />
+      <Tabs
+        value={value}
+        onChange={handleChange}
+        variant="scrollable"
+        scrollButtons="auto"
+        centered={false}
+        sx={{
+          '& .MuiTabs-flexContainer': {
+            justifyContent: 'center',
+          },
+        }}
+      >
         <Tab label="Bollywood" />
         <Tab label="Punjabi" />
         <Tab label="Rap" />
         <Tab label="Archive" />
       </Tabs>
       <TabPanel value={value} index={0} dir={theme.direction}>
+        <ActualGame />
       </TabPanel>
       <TabPanel value={value} index={1} dir={theme.direction}>
         <ActualGame />
@@ -60,9 +71,6 @@ export default function Game() {
         <ActualGame />
       </TabPanel>
       <TabPanel value={value} index={3} dir={theme.direction}>
-        <ActualGame />
-      </TabPanel>
-      <TabPanel value={value} index={4} dir={theme.direction}>
         Item Five
       </TabPanel>
     </Box>

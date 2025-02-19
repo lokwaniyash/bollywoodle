@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
-import { Box, Button, TextField, Grid, Typography, Slider, IconButton } from '@mui/material';
+import { Box, Button, TextField, Slider, IconButton, Typography, Stack } from '@mui/material';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import SkipNextIcon from '@mui/icons-material/SkipNext';
 import CircleIcon from '@mui/icons-material/Circle';
 
 const ActualGame = () => {
   const [guesses, setGuesses] = useState([false, false, false, false, false, false]);
   const [inputValue, setInputValue] = useState('');
+  const [currentStep, setCurrentStep] = useState(0);
 
   const handlePlay = () => {
     // Handle play logic here
   };
 
   const handleSkip = () => {
-    // Handle skip logic here
     setGuesses(prevGuesses => {
       const newGuesses = [...prevGuesses];
       const firstFalseIndex = newGuesses.indexOf(false);
@@ -28,58 +27,76 @@ const ActualGame = () => {
     // Trigger API call for suggestions here
   };
 
+  const handleSliderChange = (event, newValue) => {
+    setCurrentStep(newValue);
+  };
+
+  const marks = [
+    { value: 0.1 },
+    { value: 0.5 },
+    { value: 2 },
+    { value: 4 },
+    { value: 8 },
+    { value: 15 },
+    { value: 30 }
+  ];
+
   return (
     <Box sx={{ bgcolor: 'background.default', color: 'text.primary', p: 2 }}>
       {/* Guess Circles */}
-      <Box display="flex" justifyContent="center" mb={2}>
+      <Stack direction="row" justifyContent="center" mb={2} spacing={1}>
         {guesses.map((guess, index) => (
           <CircleIcon key={index} color={guess ? 'primary' : 'disabled'} />
         ))}
+      </Stack>
+
+      {/* Current Step Display */}
+      <Box display="flex" justifyContent="center" mb={1}>
+        <Typography variant="h6">
+          {currentStep} seconds
+        </Typography>
       </Box>
 
       {/* Timeline */}
-      <Box mb={2}>
+      <Box mb={2} sx={{ px: 1 }}>
         <Slider
-          defaultValue={0}
+          value={currentStep}
+          onChange={handleSliderChange}
           aria-label="Song Timeline"
-          step={0.5}
-          marks={[
-            { value: 0.5, label: '0.5s' },
-            { value: 1, label: '1s' },
-            { value: 5, label: '5s' },
-            { value: 10, label: '10s' },
-            { value: 15, label: '15s' },
-            { value: 30, label: '30s' }
-          ]}
+          step={0.1}
+          marks={marks}
           min={0}
           max={30}
+          sx={{
+            '& .MuiSlider-mark': {
+              height: 8,
+              width: 2,
+            },
+            '& .MuiSlider-thumb': {
+              display: 'none',
+            },
+          }}
           disabled
         />
       </Box>
 
       {/* Controls */}
-      <Grid container spacing={1} alignItems="center">
-        <Grid item>
-          <IconButton onClick={handlePlay} color="primary">
-            <PlayArrowIcon />
-          </IconButton>
-        </Grid>
-        <Grid item xs>
-          <TextField
-            fullWidth
-            variant="outlined"
-            placeholder="Type your guess here..."
-            value={inputValue}
-            onChange={handleInputChange}
-            sx={{ bgcolor: 'background.paper' }}
-          />
-        </Grid>
-        <Grid item>
-          <Button onClick={handleSkip} variant="contained" color="secondary">
-            Skip
-          </Button>
-        </Grid>
-      </Grid>
+      <Stack direction="row" alignItems="center" spacing={1}>
+        <IconButton onClick={handlePlay} color="primary">
+          <PlayArrowIcon />
+        </IconButton>
+        <TextField
+          fullWidth
+          variant="outlined"
+          placeholder="Type your guess here..."
+          value={inputValue}
+          onChange={handleInputChange}
+          sx={{ bgcolor: 'background.paper' }}
+        />
+        <Button onClick={handleSkip} variant="contained" color="secondary">
+          Skip
+        </Button>
+      </Stack>
     </Box>
   );
 };

@@ -52,7 +52,7 @@ function addToDB(songItem, category) {
 
 async function searchYouTube(songName) {
   try {
-    const results = await yts('"' + songName + ' audio"');
+    const results = await yts('"' + songName + ' lyrics"');
     if (results.videos.length > 0) {
       return results.videos[0].url;
     } else {
